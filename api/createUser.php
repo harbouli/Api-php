@@ -1,5 +1,5 @@
 <?php
-
+ini_set("display_errors",1);
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Content-type: application/json; UTF-8");
@@ -12,7 +12,7 @@ include_once('../classes/users.php');
 
 $db = new Database();
 $usersObj = new Users($db);
-
+$connection = $db->connect();
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
 
