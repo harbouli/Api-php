@@ -1,8 +1,8 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Content-type: application/json; UTF-8');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Content-type: application/json; UTF-8");
 
 // including files
 include_once('../config/db.php');
@@ -14,7 +14,7 @@ $db = new Database();
 $usersObj = new Users($db);
 
 
-if($_SERVER['REQUEST_METHOD '] === "POST"){
+if($_SERVER['REQUEST_METHOD'] === "POST"){
 
 
      $data = json_decode(file_get_contents("php://input"));
