@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
     if(!empty($data->email) && !empty($data->password)){
         $usersObj ->email = $data->email;
         
-        $usersObj ->password = $data->password;
+        // $usersObj ->password = $data->password;
 
         $user_data = $usersObj->login_Cheker();
 
@@ -30,6 +30,20 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
             $lastname = $user_data['lastname'];
             $email = $user_data['email'];
             $password = $user_data['password'];
+
+            if(password_verify($data->password, $password)){
+            http_response_code(200);
+            echo json_encode(array(
+            "status"=> 200,
+            "message"=> "User Login Successfully"
+            ));
+            }else{
+            http_response_code(404);
+            echo json_encode(array(
+            "status"=> 404,
+            "message"=> "You Insert Wrong Password Pleas Try Again"
+            )); 
+            }
         }else{
             http_response_code(404);
             echo json_encode(array(
