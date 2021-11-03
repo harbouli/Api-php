@@ -1,5 +1,12 @@
 <?php
- ini_set("display_errors",1);
+
+
+require('../vendor/autoload.php');
+use \Firebase\JWT\JWT;
+
+
+
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Content-type: application/json;charset=UTF-8");
@@ -32,17 +39,43 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
             $password = $user_data['password'];
 
             if(password_verify($data->password, $password)){
-            http_response_code(200);
-            echo json_encode(array(
-            "status"=> 200,
-            "message"=> "User Login Successfully"
-            ));
+
+                // successfully Loged in
+
+                $secret_key = "xDcexyts9e9Bccpt";
+                $iss = 'localhost';
+                $iat = time();
+                $nbf = $iat+ 10;
+                $exp = $iat+ 60*60*24*15;
+                $aud = 'myUsers';
+                $user_data_arry = array(
+                    'id' => $user_data['_id'],
+                    'firstname' => $user_data['firstname'],
+                    'lastname' => $user_data['lastname'],
+                    'email' => $user_data['email'],
+                );
+                $payload = array(
+                    'iss'=> $iss,
+                    'iat'=> $iat,
+                    'nbf'=> $nbf,
+                    'exp'=> $exp,
+                    'aud'=>$aud,
+                    'data'=>$user_data_arry
+                );
+                $jwt =JWT::encode($payload , $secret_key);
+
+                http_response_code(200);
+                echo json_encode(array(
+                "status"=> 200,
+                "jwt" => $jwt,
+                "message"=> "User Login Successfully"
+                ));
             }else{
-            http_response_code(404);
-            echo json_encode(array(
-            "status"=> 404,
-            "message"=> "You Insert Wrong Password Pleas Try Again"
-            )); 
+                http_response_code(404);
+                echo json_encode(array(
+                "status"=> 404,
+                "message"=> "You Insert Wrong Password Pleas Try Again"
+                )); 
             }
         }else{
             http_response_code(404);
