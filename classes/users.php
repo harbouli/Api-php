@@ -13,14 +13,18 @@ class Users {
         $this->conn =$db;
         $this ->tbl_users = 'tbl_users';
     }
-    public function createUser(){
-        $user_query = "INSERT INTO".$this ->tbl_users."SET firstname=?,lastname=?,email=?,password=?";
-        $user_obj = $this->conn->prepare($user_query);
-        $user_obj->bind_param("ssss", $this->firstname,$this->lastname,$this->email,$this->password);
+    public function create_user(){
 
-        if($user_obj->execute()){
-            return true;
+        $user_query = "INSERT INTO ".$this->tbl_users." SET firstname = ?, lastname = ?, email = ?, password = ?";
+    
+        $usersObj = $this->conn->prepare($user_query);
+    
+        $usersObj->bind_param("ssss", $this->firstname, $this->lastname, $this->email, $this->password);
+    
+        if($usersObj->execute()){
+          return true;
         }
+    
         return false;
-    }
+      }
 }

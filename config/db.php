@@ -12,8 +12,8 @@ class Database{
   public function connect(){
      // variable initialization
      $this->hostname = "localhost";
-     $this->dbname = "api";
-     $this->username = "api";
+     $this->dbname = "php_react_api";
+     $this->username = "admin";
      $this->password = "root";
 
      $this->conn = new mysqli($this->hostname, $this->username,  $this->password, $this->dbname);

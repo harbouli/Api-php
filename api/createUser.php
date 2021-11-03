@@ -1,5 +1,5 @@
 <?php
-ini_set("display_errors",1);
+ ini_set("display_errors",1);
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Content-type: application/json; UTF-8");
@@ -11,24 +11,24 @@ include_once('../classes/users.php');
 // Object
 
 $db = new Database();
-$usersObj = new Users($db);
 $connection = $db->connect();
+$usersObj = new Users($connection);
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
 
 
      $data = json_decode(file_get_contents("php://input"));
     if (!empty($data->firstname) && !empty($data->email) && !empty($data->password) && !empty($data->lastname)) {
-        $userObj->firstname = $data->firstname;
-        $userObj->lastname = $data->lastname;
-        $userObj->email = $data->email;
-        $userObj->password = $data->password;
+        $usersObj->firstname = $data->firstname;
+        $usersObj->lastname = $data->lastname;
+        $usersObj->email = $data->email;
+        $usersObj->password = password_hash($data->password , PASSWORD_DEFAULT);
 
 
 
 
 
-        if($userObj->createUser()){
+        if($usersObj->create_user()){
             http_response_code(200);
             echo json_encode(array(
             "status"=> 200,
