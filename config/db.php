@@ -13,7 +13,7 @@ class Database{
      // variable initialization
      $this->hostname = "localhost";
      $this->dbname = "php_react_api";
-     $this->username = "admin";
+     $this->username = "root";
      $this->password = "root";
 
      $this->conn = new mysqli($this->hostname, $this->username,  $this->password, $this->dbname);
