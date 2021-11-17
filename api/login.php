@@ -6,10 +6,10 @@ use \Firebase\JWT\JWT;
 
 
 
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
-header("Content-type: application/json;charset=UTF-8");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // including files
 include_once('../config/db.php');
@@ -49,7 +49,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
                 $exp = $iat+ 60*60*24*15;
                 $aud = 'myUsers';
                 $user_data_arry = array(
-                    'id' => $user_data['_id'],
+                    'id' => $user_data['id'],
                     'firstname' => $user_data['firstname'],
                     'lastname' => $user_data['lastname'],
                     'email' => $user_data['email'],
