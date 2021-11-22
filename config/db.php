@@ -27,4 +27,23 @@ class Database{
        echo "--successful connection--";
      }
   }
+
+  public function dbConnection(){
+
+    $this->hostname = "localhost";
+     $this->dbname = "php_react_api";
+     $this->username = "root";
+     $this->password = "root";
+        
+    try{
+        $conn = new PDO('mysql:host='.$this->hostname.';dbname='.$this->dbname,$this->username,$this->password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $conn;
+    }
+    catch(PDOException $e){
+        echo "Connection error ".$e->getMessage(); 
+        exit;
+    }
+      
+}
 }
