@@ -1,6 +1,5 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
@@ -15,11 +14,8 @@ function msg($success,$status,$message,$extra = []){
 
 // INCLUDING DATABASE AND MAKING OBJECT
 include_once('../config/db.php');
-
-// Object
-
 $db = new Database();
-$connection = $db->connect();
+$connection = $db->dbConnection();
 
 // GET DATA FORM REQUEST
 $data = json_decode(file_get_contents("php://input"));
@@ -74,7 +70,7 @@ else:
                 $returnData = msg(0,422, 'This E-mail already in use!');
             
             else:
-                $insert_query = "INSERT INTO `tbl_users`(`firstname`,`lastname`,`email`,`password`) VALUES(:firstname,:lastname,:email,:password)";
+                $insert_query = "INSERT INTO `tbl_users` (`firstname`,`lastname`,`email`,`password`) VALUES(:firstname,:lastname,:email,:password)";
 
                 $insert_stmt = $connection->prepare($insert_query);
 
