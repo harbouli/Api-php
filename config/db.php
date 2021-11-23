@@ -27,10 +27,6 @@ class Database{
        echo "--successful connection--";
      }
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> 719a507807f09a928160b6b0665e60b2ed679fa2
   public function dbConnection(){
 
     $this->hostname = "localhost";
