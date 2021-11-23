@@ -92,10 +92,4 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         "message"=> "Please Enter Your Password and Email"
         ));
     }
-}else{
-    http_response_code(400);
-        echo json_encode(array(
-        "status"=> 404,
-        "message"=> "Page Not Found"
-        ));
 }
