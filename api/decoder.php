@@ -10,14 +10,20 @@ require('../vendor/autoload.php');
 use \Firebase\JWT\JWT;
 
 $headers = getallheaders();
-
+function msg($success,$status,$message,$extra = []){
+    return array_merge([
+        'success' => $success,
+        'status' => $status,
+        'message' => $message
+    ],$extra);
+}
 
 $returnData = [
     "success" => 0,
     "status" => 401,
     "message" => "Unauthorized"
 ];
-if($_SERVER['REQUEST_METHOD'] === "POST"):
+
     
     if(array_key_exists('Authorization',$headers) 
         && !empty(trim($headers['Authorization']))
@@ -25,13 +31,14 @@ if($_SERVER['REQUEST_METHOD'] === "POST"):
         $token = explode(" ", trim($headers['Authorization']))[1];
    $jwt_secrect = "xDcexyts9e9Bccpt";
         $decode = JWT::decode($token, $jwt_secrect, array('HS256'));
-        http_response_code(404);
-                echo json_encode(array(
-                "data"=> $decode->data,
-                "message"=> "your Data"
-                )); 
+        $returnData = [
+            'success' => 1,
+            "status"=> 200,
+            'message' => 'Your Info.',
+            "user"=> $decode->data,
+        ]; 
+    else: 
+        $returnData = msg(0,401,'Unauthorized');
     endif;
+    echo json_encode($returnData);
 
-
-else: echo json_encode($returnData);
-endif;

@@ -11,6 +11,15 @@ header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+function msg($success,$status,$message,$extra = []){
+    return array_merge([
+        'success' => $success,
+        'status' => $status,
+        'message' => $message
+    ],$extra);
+}
+
+
 // including files
 include_once('../config/db.php');
 include_once('../classes/users.php');
@@ -20,6 +29,9 @@ include_once('../classes/users.php');
 $db = new Database();
 $connection = $db->connect();
 $usersObj = new Users($connection);
+
+
+$returnData = [];
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
     $data = json_decode(file_get_contents("php://input"));
@@ -45,7 +57,6 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
                 $secret_key = "xDcexyts9e9Bccpt";
                 $iss = 'localhost';
                 $iat = time();
-                $nbf = $iat+ 10;
                 $exp = $iat+ 60*60*24*15;
                 $aud = 'myUsers';
                 $user_data_arry = array(
@@ -57,45 +68,27 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
                 $payload = array(
                     'iss'=> $iss,
                     'iat'=> $iat,
-                    'nbf'=> $nbf,
                     'exp'=> $exp,
                     'aud'=>$aud,
                     'data'=>$user_data_arry
                 );
                 $jwt =JWT::encode($payload , $secret_key);
-
-                http_response_code(200);
-                echo json_encode(array(
-                "status"=> 200,
-                "jwt" => $jwt,
-                "message"=> "User Login Successfully"
-                ));
+                $returnData = [
+                    'success' => 1,
+                    "status"=> 200,
+                    'message' => 'You have successfully logged in.',
+                    'token' => $jwt
+                ];
             }else{
-                http_response_code(404);
-                echo json_encode(array(
-                "status"=> 404,
-                "message"=> "You Insert Wrong Password Pleas Try Again"
-                )); 
+                $returnData = msg(0,422,'You Insert Wrong Password Pleas Try Again');
             }
         }else{
-            http_response_code(404);
-            echo json_encode(array(
-            "status"=> 404,
-            "message"=> "Please Enter Your Password"
-            )); 
+        $returnData = msg(0,422,'Please Enter Your Password');
         }
         
     }else{
-        http_response_code(400);
-        echo json_encode(array(
-        "status"=> 400,
-        "message"=> "Please Enter Your Password and Email"
-        ));
+        $returnData = msg(0,422,'Please Enter Your Password and Email');
+
     }
-}else{
-    http_response_code(400);
-        echo json_encode(array(
-        "status"=> 404,
-        "message"=> "Page Not Found"
-        ));
 }
+echo json_encode($returnData);
