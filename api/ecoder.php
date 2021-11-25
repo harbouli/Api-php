@@ -10,10 +10,6 @@ require('../vendor/autoload.php');
 use \Firebase\JWT\JWT;
 
 $headers = getallheaders();
-<<<<<<< HEAD
-=======
-
->>>>>>> fc166ca6e8c229399c65955c4589f82d751cd2b2
 function msg($success,$status,$message,$extra = []){
     return array_merge([
         'success' => $success,
@@ -22,18 +18,14 @@ function msg($success,$status,$message,$extra = []){
     ],$extra);
 }
 
-$returnData = [
-    "success" => 0,
-    "status" => 401,
-    "message" => "Unauthorized"
-];
+$returnData = [];
 
     
     if(array_key_exists('Authorization',$headers) 
         && !empty(trim($headers['Authorization']))
         ):
         $token = explode(" ", trim($headers['Authorization']))[1];
-   $jwt_secrect = "xDcexyts9e9Bccpt";
+        $jwt_secrect = "xDcexyts9e9Bccpt";
         $decode = JWT::decode($token, $jwt_secrect, array('HS256'));
         $returnData = [
             'success' => 1,
