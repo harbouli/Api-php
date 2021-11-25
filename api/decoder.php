@@ -10,6 +10,10 @@ require('../vendor/autoload.php');
 use \Firebase\JWT\JWT;
 
 $headers = getallheaders();
+<<<<<<< HEAD
+=======
+
+>>>>>>> fc166ca6e8c229399c65955c4589f82d751cd2b2
 function msg($success,$status,$message,$extra = []){
     return array_merge([
         'success' => $success,

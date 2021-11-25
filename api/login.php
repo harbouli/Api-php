@@ -73,6 +73,16 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
                     'data'=>$user_data_arry
                 );
                 $jwt =JWT::encode($payload , $secret_key);
+<<<<<<< HEAD
+=======
+
+                // http_response_code(200);
+                // echo json_encode(array(
+                // "status"=> 200,
+                // "jwt" => $jwt,
+                // "message"=> "User Login Successfully"
+                // ));
+>>>>>>> fc166ca6e8c229399c65955c4589f82d751cd2b2
                 $returnData = [
                     'success' => 1,
                     "status"=> 200,
@@ -80,15 +90,43 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
                     'token' => $jwt
                 ];
             }else{
+<<<<<<< HEAD
                 $returnData = msg(0,422,'You Insert Wrong Password Pleas Try Again');
             }
         }else{
+=======
+                // http_response_code(404);
+                // echo json_encode(array(
+                // "status"=> 404,
+                // "message"=> "You Insert Wrong Password Pleas Try Again"
+                // )); 
+                $returnData = msg(0,422,'You Insert Wrong Password Pleas Try Again');
+            }
+        }else{
+        //     http_response_code(404);
+        //     echo json_encode(array(
+        //     "status"=> 404,
+        //     "message"=> "Please Enter Your Password"
+        //     )); 
+>>>>>>> fc166ca6e8c229399c65955c4589f82d751cd2b2
         $returnData = msg(0,422,'Please Enter Your Password');
         }
         
     }else{
+<<<<<<< HEAD
+=======
+        // http_response_code(400);
+        // echo json_encode(array(
+        // "status"=> 400,
+        // "message"=> "Please Enter Your Password and Email"
+        // ));
+>>>>>>> fc166ca6e8c229399c65955c4589f82d751cd2b2
         $returnData = msg(0,422,'Please Enter Your Password and Email');
 
     }
 }
+<<<<<<< HEAD
 echo json_encode($returnData);
+=======
+echo json_encode($returnData);
+>>>>>>> fc166ca6e8c229399c65955c4589f82d751cd2b2
