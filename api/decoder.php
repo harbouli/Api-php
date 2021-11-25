@@ -11,6 +11,13 @@ use \Firebase\JWT\JWT;
 
 $headers = getallheaders();
 
+function msg($success,$status,$message,$extra = []){
+    return array_merge([
+        'success' => $success,
+        'status' => $status,
+        'message' => $message
+    ],$extra);
+}
 
 $returnData = [
     "success" => 0,
